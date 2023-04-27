@@ -3,7 +3,8 @@ import express from "express"
 import minimist from "minimist"
 import { rps, rpsls } from './lib/rpsls.js'
 
-const app = express()
+const app = express();
+
 var args = minimist(process.argv.slice(2));
 const PORT = args.port || 5000;
 
@@ -30,20 +31,20 @@ app.get('/app/rpsls/play', (req, res) => {
 	res.status(200).send(rpsls(req.query.shot));
 })
 
+app.post('/app/rps/play', (req, res) => {
+	res.status(200).send(rps(req.body.shot));
+})
+
+app.post('/app/rpsls/play', (req, res) => {
+	res.status(200).send(rpsls(req.body.shot));
+})
+
 app.get('/app/rps/play/:arg', (req, res) => {
 	res.status(200).send(rps(req.params.arg));
 })
 
 app.get('/app/rpsls/play/:arg', (req, res) => {
 	res.status(200).send(rpsls(req.params.arg));
-})
-
-app.post('/app/rps/play', (req, res) => {
-        res.status(200).send(rps(req.body.shot));
-})
-
-app.post('/app/rpsls/play', (req, res) => {
-        res.status(200).send(rpsls(req.body.shot));
 })
 
 app.get('*', (req, res) => {
